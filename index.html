@@ -1,0 +1,788 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Road Trip Atlas — Small-town weekends, planned</title>
+  <meta name="description" content="For the towns the highways forgot. For the travelers tired of the same five cities. The Road Trip Atlas is a map of small-town America — every event, every weekend, every detour worth taking." />
+  <meta name="theme-color" content="#1C5239" />
+  <meta property="og:title" content="Road Trip Atlas" />
+  <meta property="og:description" content="For the towns the highways forgot. Plan a weekend you'll actually remember." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ---------- Reset / Base ---------- */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: #1C2B22;
+      background: #F5F1E8;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
+
+    h1, h2, h3, h4 { font-family: 'Fraunces', Georgia, serif; font-weight: 600; line-height: 1.1; margin: 0; }
+
+    .eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: #1C5239;
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* ---------- Beta Banner ---------- */
+    .beta-banner {
+      background: #1C5239;
+      color: #F5F1E8;
+      text-align: center;
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+    }
+    .beta-banner strong { font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-right: 0.5rem; }
+
+    /* ---------- Header / Nav ---------- */
+    .site-header {
+      position: sticky; top: 0; z-index: 50;
+      background: #F5F1E8;
+      border-bottom: 1px solid rgba(28, 82, 57, 0.12);
+    }
+    .nav-wrap {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 1.5rem;
+      max-width: 1280px; margin: 0 auto;
+    }
+    .brand { display: flex; align-items: center; gap: 0.6rem; font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.15rem; color: #1C2B22; }
+    .brand-mark {
+      width: 34px; height: 34px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .brand-mark svg { width: 100%; height: 100%; }
+
+    .nav-links { display: flex; align-items: center; gap: 1.75rem; }
+    .nav-links a {
+      font-size: 0.92rem; font-weight: 500; color: #1C2B22;
+      transition: color 0.15s ease;
+    }
+    .nav-links a:hover { color: #1C5239; }
+
+    .nav-toggle { display: none; padding: 0.4rem; }
+    .nav-toggle svg { width: 26px; height: 26px; }
+
+    @media (max-width: 880px) {
+      .nav-links {
+        position: fixed; top: 0; right: 0; bottom: 0;
+        background: #F5F1E8; flex-direction: column; align-items: flex-start;
+        padding: 5rem 2rem 2rem; gap: 1.5rem;
+        width: min(80vw, 320px);
+        transform: translateX(100%); transition: transform 0.25s ease;
+        box-shadow: -8px 0 30px rgba(0,0,0,0.1);
+      }
+      .nav-links.open { transform: translateX(0); }
+      .nav-links a { font-size: 1.1rem; }
+      .nav-toggle { display: block; z-index: 60; }
+    }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      position: relative;
+      min-height: 78vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 5rem 1.5rem;
+      color: #F5F1E8;
+      background: #1C2B22;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=2000&q=80');
+      background-size: cover; background-position: center;
+      opacity: 0.55;
+    }
+    .hero::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(28,43,34,0.4), rgba(28,43,34,0.75));
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 880px; }
+    .hero .eyebrow { color: #E8C7A0; }
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 4.8rem);
+      font-weight: 700;
+      margin: 1.25rem 0 1.5rem;
+      letter-spacing: -0.02em;
+    }
+    .hero p.lede {
+      font-family: 'Fraunces', serif; font-style: italic;
+      font-size: clamp(1.05rem, 2vw, 1.35rem);
+      max-width: 700px; margin: 0 auto 1.25rem;
+      color: #EDE3CE; font-weight: 400;
+    }
+    .hero p.value {
+      font-size: 1rem; max-width: 620px; margin: 0 auto 2.25rem;
+      color: #EDE3CE;
+    }
+    .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 0.85rem 1.6rem;
+      font-size: 0.95rem; font-weight: 600;
+      border-radius: 999px;
+      transition: transform 0.12s ease, background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+      letter-spacing: 0.01em;
+    }
+    .btn:active { transform: translateY(1px); }
+    .btn-primary {
+      background: #C25A2C; color: #F5F1E8;
+    }
+    .btn-primary:hover { background: #A94A22; box-shadow: 0 6px 20px rgba(194,90,44,0.35); }
+    .btn-outline {
+      background: transparent; color: #F5F1E8; border: 1.5px solid #F5F1E8;
+    }
+    .btn-outline:hover { background: #F5F1E8; color: #1C2B22; }
+    .btn-dark {
+      background: #1C5239; color: #F5F1E8;
+    }
+    .btn-dark:hover { background: #143b29; box-shadow: 0 6px 20px rgba(28,82,57,0.3); }
+
+    /* ---------- Sections ---------- */
+    section { padding: 5rem 0; }
+    .section-head { text-align: center; max-width: 720px; margin: 0 auto 3rem; }
+    .section-head h2 {
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      margin: 1rem 0 0.5rem;
+      letter-spacing: -0.01em;
+    }
+    .section-head p { color: #4A5C50; font-size: 1.05rem; }
+
+    /* ---------- Events Grid ---------- */
+    .events-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    }
+    @media (max-width: 880px) { .events-grid { grid-template-columns: 1fr; } }
+    .event-card {
+      background: #FBF8F1;
+      border: 1px solid rgba(28, 82, 57, 0.12);
+      border-radius: 14px;
+      padding: 1.6rem;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+      cursor: pointer;
+      text-align: left;
+      width: 100%;
+    }
+    .event-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(28,43,34,0.08);
+      border-color: rgba(28, 82, 57, 0.3);
+    }
+    .event-emoji { font-size: 1.8rem; margin-bottom: 0.6rem; }
+    .event-card h3 { font-size: 1.25rem; margin-bottom: 0.4rem; }
+    .event-meta { font-size: 0.88rem; color: #4A5C50; }
+
+    /* ---------- States ---------- */
+    .states-section { background: #EFE8D7; }
+    .states-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    }
+    @media (max-width: 880px) { .states-grid { grid-template-columns: 1fr; } }
+    .state-card {
+      position: relative; height: 380px; border-radius: 16px; overflow: hidden;
+      cursor: pointer; color: #F5F1E8;
+      background-size: cover; background-position: center;
+      transition: transform 0.2s ease;
+      width: 100%; text-align: left;
+      display: block;
+    }
+    .state-card:hover { transform: translateY(-4px); }
+    .state-card::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(28,43,34,0.15) 0%, rgba(28,43,34,0.85) 100%);
+    }
+    .state-content { position: absolute; inset: 0; z-index: 2; padding: 1.75rem; display: flex; flex-direction: column; justify-content: flex-end; }
+    .state-name { font-family: 'Fraunces', serif; font-size: 1.85rem; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; }
+    .state-tagline { font-family: 'Fraunces', serif; font-style: italic; margin: 0.5rem 0 1rem; font-size: 1rem; color: #EDE3CE; }
+    .state-meta { font-size: 0.85rem; color: #C9D7CB; }
+    .state-meta .arrow { color: #E8C7A0; font-weight: 600; margin-left: 0.5rem; }
+
+    .state-maine { background-image: url('https://images.unsplash.com/photo-1571263380091-77ab46c6e0b7?auto=format&fit=crop&w=1200&q=80'); }
+    .state-nh    { background-image: url('https://images.unsplash.com/photo-1506260408121-e353d10b87c7?auto=format&fit=crop&w=1200&q=80'); }
+    .state-vt    { background-image: url('https://images.unsplash.com/photo-1507041957456-9c397ce39c97?auto=format&fit=crop&w=1200&q=80'); }
+
+    /* ---------- CTA Strip ---------- */
+    .cta-strip { background: #1C5239; color: #F5F1E8; text-align: center; }
+    .cta-strip h2 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); color: #F5F1E8; }
+    .cta-strip p { color: #C9D7CB; max-width: 620px; margin: 1rem auto 2rem; }
+    .cta-strip .btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    /* ---------- Footer ---------- */
+    footer {
+      background: #1C2B22; color: #C9D7CB;
+      padding: 4rem 1.5rem 2rem;
+    }
+    .footer-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2.5rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid rgba(245,241,232,0.12);
+    }
+    @media (max-width: 720px) { .footer-grid { grid-template-columns: 1fr; } }
+    .footer-brand h3 { font-family: 'Fraunces', serif; color: #F5F1E8; font-size: 1.4rem; margin-bottom: 0.6rem; }
+    .footer-brand p { font-size: 0.92rem; line-height: 1.6; }
+    .footer-col h4 { font-family: 'Inter', sans-serif; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: #E8C7A0; margin-bottom: 1rem; font-weight: 600; }
+    .footer-col a { display: block; padding: 0.3rem 0; font-size: 0.92rem; color: #C9D7CB; transition: color 0.15s; }
+    .footer-col a:hover { color: #F5F1E8; }
+    .footer-bottom {
+      max-width: 1200px; margin: 2rem auto 0;
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+      font-size: 0.82rem; color: #7A8B7F;
+    }
+
+    /* ---------- Coming-Soon Pages ---------- */
+    .page { display: none; min-height: 90vh; padding: 5rem 1.5rem; }
+    .page.active { display: block; }
+    .page-inner {
+      max-width: 720px; margin: 0 auto;
+      background: #FBF8F1;
+      border: 1px solid rgba(28,82,57,0.15);
+      border-radius: 18px;
+      padding: 3rem 2.5rem;
+      text-align: center;
+    }
+    .page-inner .eyebrow { display: block; margin-bottom: 1rem; }
+    .page-inner h1 {
+      font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 1.25rem; line-height: 1.15;
+    }
+    .page-inner p.copy {
+      font-family: 'Fraunces', serif; font-style: italic; font-size: 1.1rem;
+      color: #4A5C50; margin: 0 0 1.25rem;
+    }
+    .page-inner p.signoff {
+      font-size: 1rem; color: #1C2B22; margin: 0 0 2rem;
+    }
+
+    /* Email capture form */
+    .signup-form {
+      display: flex; gap: 0.6rem; max-width: 460px; margin: 0 auto;
+      flex-wrap: wrap;
+    }
+    .signup-form input[type="email"] {
+      flex: 1; min-width: 200px;
+      padding: 0.85rem 1rem;
+      border: 1.5px solid rgba(28,82,57,0.25);
+      border-radius: 999px;
+      background: #F5F1E8;
+      font: inherit; color: #1C2B22;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .signup-form input[type="email"]:focus { border-color: #1C5239; }
+    .signup-form button { white-space: nowrap; }
+
+    .form-status {
+      margin-top: 1rem; font-size: 0.92rem; min-height: 1.5em;
+      color: #1C5239; font-weight: 500;
+    }
+    .form-status.error { color: #B5421F; }
+
+    .back-home { display: inline-block; margin-top: 2rem; font-size: 0.9rem; color: #1C5239; font-weight: 500; }
+    .back-home:hover { text-decoration: underline; }
+
+    /* ---------- Trip Planner Form ---------- */
+    .planner-form {
+      max-width: 520px; margin: 0 auto;
+      text-align: left;
+      background: #F5F1E8;
+      border: 1px solid rgba(28,82,57,0.18);
+      border-radius: 14px;
+      padding: 1.75rem;
+      margin-top: 1.25rem;
+    }
+    .planner-row { margin-bottom: 1rem; }
+    .planner-row label {
+      display: block; font-size: 0.78rem; letter-spacing: 0.14em;
+      text-transform: uppercase; font-weight: 600; color: #1C5239;
+      margin-bottom: 0.4rem;
+    }
+    .planner-row input {
+      width: 100%; padding: 0.8rem 1rem;
+      border: 1.5px solid rgba(28,82,57,0.2);
+      border-radius: 10px;
+      background: #FBF8F1;
+      font: inherit; color: #1C2B22; outline: none;
+    }
+    .planner-row input:focus { border-color: #1C5239; }
+    .planner-form button { width: 100%; margin-top: 0.5rem; }
+
+    /* ---------- Toast ---------- */
+    .toast {
+      position: fixed; bottom: 1.5rem; left: 50%;
+      transform: translate(-50%, 80px);
+      background: #1C2B22; color: #F5F1E8;
+      padding: 0.85rem 1.25rem;
+      border-radius: 999px;
+      font-size: 0.92rem; font-weight: 500;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+      z-index: 100;
+      transition: transform 0.3s ease;
+      max-width: calc(100vw - 2rem);
+      text-align: center;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    /* ---------- Misc ---------- */
+    .center { text-align: center; }
+    .mt-2 { margin-top: 1rem; }
+
+    /* Hide hero/sections when on a sub-page */
+    body.subpage .home-only { display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- Beta banner -->
+  <div class="beta-banner" role="status">
+    <strong>Beta</strong> Homepage preview — full atlas launching soon. Drop your email anywhere on the site and Shotgun will holler when it's ready.
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a href="#/" class="brand" data-route="/">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="18" fill="none" stroke="#1C5239" stroke-width="2"/>
+            <polygon points="20,8 24,20 20,32 16,20" fill="#1C5239"/>
+            <polygon points="20,8 24,20 20,20" fill="#C25A2C"/>
+            <circle cx="20" cy="20" r="2" fill="#F5F1E8" stroke="#1C5239" stroke-width="1"/>
+          </svg>
+        </span>
+        <span>Road Trip Atlas</span>
+      </a>
+      <nav>
+        <button class="nav-toggle" aria-label="Open menu" id="navToggle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+        <div class="nav-links" id="navLinks">
+          <a href="#/" data-route="/">Home</a>
+          <a href="#/calendar" data-route="/calendar">Calendar</a>
+          <a href="#/towns" data-route="/towns">Towns</a>
+          <a href="#/plan" data-route="/plan">Plan a Trip</a>
+          <a href="#/submit" data-route="/submit">Submit Event</a>
+          <a href="#/ai-tools" data-route="/ai-tools">AI Tools</a>
+          <a href="#/about" data-route="/about">About</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ HOMEPAGE ============ -->
+  <main id="home" class="home-only">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-content">
+        <span class="eyebrow">The Road Trip Atlas</span>
+        <h1>There are towns America forgot.</h1>
+        <p class="lede">Mill towns, port towns, granite towns, end-of-the-line towns. The places your grandfather drove through on a Sunday afternoon, windows down, no plan but the next county line.</p>
+        <p class="value">We map them — every weekend, every festival, every back road worth taking. A free trip planner for the America that doesn't fit on a billboard.</p>
+        <div class="hero-cta">
+          <a href="#/plan" class="btn btn-outline" data-route="/plan">Plan a weekend</a>
+          <a href="#/calendar" class="btn btn-dark" data-route="/calendar">Browse the calendar</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Events -->
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Coming up next</span>
+          <h2>Open your calendar. Cancel something.</h2>
+        </div>
+        <div class="events-grid">
+          <button class="event-card" data-route="/calendar">
+            <div class="event-emoji">🍂</div>
+            <h3>Autumn Leaf Festival</h3>
+            <div class="event-meta">Camden, Maine · Oct 10–12, 2026</div>
+          </button>
+          <button class="event-card" data-route="/calendar">
+            <div class="event-emoji">🏔️</div>
+            <h3>Granite State Fair</h3>
+            <div class="event-meta">Concord, NH · Oct 17–19, 2026</div>
+          </button>
+          <button class="event-card" data-route="/calendar">
+            <div class="event-emoji">🍁</div>
+            <h3>Maple Syrup Festival</h3>
+            <div class="event-meta">Stowe, Vermont · Oct 24–26, 2026</div>
+          </button>
+          <button class="event-card" data-route="/calendar">
+            <div class="event-emoji">🏭</div>
+            <h3>Mill Town Heritage Day</h3>
+            <div class="event-meta">Lewiston, Maine · Nov 1, 2026</div>
+          </button>
+          <button class="event-card" data-route="/calendar">
+            <div class="event-emoji">🎵</div>
+            <h3>White Mountain Music Festival</h3>
+            <div class="event-meta">Lincoln, NH · Nov 7–8, 2026</div>
+          </button>
+          <button class="event-card" data-route="/calendar">
+            <div class="event-emoji">🌾</div>
+            <h3>Northeast Kingdom Harvest</h3>
+            <div class="event-meta">St. Johnsbury, Vermont · Nov 14, 2026</div>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- States -->
+    <section class="states-section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Pick a state</span>
+          <h2>Where are you driving?</h2>
+        </div>
+        <div class="states-grid">
+          <button class="state-card state-maine" data-route="/towns">
+            <div class="state-content">
+              <div class="state-name">Maine</div>
+              <div class="state-tagline">Get off I-95. Find the towns the paper mills left behind.</div>
+              <div class="state-meta">47 towns · 128 events <span class="arrow">Explore →</span></div>
+            </div>
+          </button>
+          <button class="state-card state-nh" data-route="/towns">
+            <div class="state-content">
+              <div class="state-name">New Hampshire</div>
+              <div class="state-tagline">Live free, drive north. The forgotten towns of the White Mountains and beyond.</div>
+              <div class="state-meta">38 towns · 94 events <span class="arrow">Explore →</span></div>
+            </div>
+          </button>
+          <button class="state-card state-vt" data-route="/towns">
+            <div class="state-content">
+              <div class="state-name">Vermont</div>
+              <div class="state-tagline">Past the postcard towns lies the real Vermont. Drive that way.</div>
+              <div class="state-meta">52 towns · 117 events <span class="arrow">Explore →</span></div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Strip -->
+    <section class="cta-strip">
+      <div class="container">
+        <span class="eyebrow" style="color:#E8C7A0;">For the people who run the place</span>
+        <h2>Run a town? Run a Chamber? Run a tourism board?</h2>
+        <p>Road Trip Atlas is free for any town to use, share, and contribute to. Get your weekend on the map.</p>
+        <div class="btns">
+          <a href="#/submit" class="btn btn-primary" data-route="/submit">Add your town's event</a>
+          <a href="#/ai-tools" class="btn btn-outline" data-route="/ai-tools">Try the AI tools</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ COMING-SOON PAGES ============ -->
+  <div id="page-calendar" class="page">
+    <div class="page-inner">
+      <span class="eyebrow">The Calendar</span>
+      <h1>Not built yet. We're out mapping back roads.</h1>
+      <p class="copy">Trust us — you don't wanna know where we currently are or what we had to do to get here. But hey, when we're done you'll know exactly which roads to take… and which ones'll get your tires slashed by a guy named Earl.</p>
+      <p class="signoff">Drop your email. Shotgun will holler when it's ready. <em>(Driver's busy. Don't bother the driver.)</em></p>
+      <form class="signup-form" data-page="calendar">
+        <input type="email" name="email" placeholder="you@somewhere.com" required />
+        <button type="submit" class="btn btn-dark">Notify Shotgun</button>
+      </form>
+      <div class="form-status" aria-live="polite"></div>
+      <a href="#/" class="back-home" data-route="/">← Back to the homepage</a>
+    </div>
+  </div>
+
+  <div id="page-towns" class="page">
+    <div class="page-inner">
+      <span class="eyebrow">The Towns</span>
+      <h1>The towns are real. The page isn't. Yet.</h1>
+      <p class="copy">We're driving them one by one. Some have a diner. Some have a flag and a feeling. Some have a guy on a porch who's gonna ask what we want before we even get out of the car.</p>
+      <p class="signoff">Leave your email and we'll send you the first batch — Maine, New Hampshire, Vermont — the second they're live.</p>
+      <form class="signup-form" data-page="towns">
+        <input type="email" name="email" placeholder="you@somewhere.com" required />
+        <button type="submit" class="btn btn-dark">Notify Shotgun</button>
+      </form>
+      <div class="form-status" aria-live="polite"></div>
+      <a href="#/" class="back-home" data-route="/">← Back to the homepage</a>
+    </div>
+  </div>
+
+  <div id="page-plan" class="page">
+    <div class="page-inner">
+      <span class="eyebrow">Plan a weekend</span>
+      <h1>The trip planner's almost ready. Take it for a test drive.</h1>
+      <p class="copy">Punch in a start and an end. We'll save your route and let you know the second the real planner's open for business — turn-by-turn detours, festival stops, the whole map.</p>
+      <p class="signoff">No login. No spam. Just Shotgun, a notebook, and a promise.</p>
+      <form class="planner-form" data-page="plan">
+        <div class="planner-row">
+          <label for="start">Starting from</label>
+          <input id="start" name="start" type="text" placeholder="e.g. Concord, NH" required />
+        </div>
+        <div class="planner-row">
+          <label for="end">Heading to</label>
+          <input id="end" name="end" type="text" placeholder="e.g. Bar Harbor, ME" required />
+        </div>
+        <div class="planner-row">
+          <label for="email">Your email</label>
+          <input id="email" name="email" type="email" placeholder="you@somewhere.com" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Save my route</button>
+      </form>
+      <div class="form-status" aria-live="polite"></div>
+      <a href="#/" class="back-home" data-route="/">← Back to the homepage</a>
+    </div>
+  </div>
+
+  <div id="page-submit" class="page">
+    <div class="page-inner">
+      <span class="eyebrow">Submit an event</span>
+      <h1>Got a weekend worth driving for? Tell Shotgun.</h1>
+      <p class="copy">Festival, fair, parade, a lighthouse opening, the world's biggest pumpkin contest, a barn dance with a guy named Dale on fiddle — if it's small-town and it's worth the drive, we want it on the atlas.</p>
+      <p class="signoff">Submission form's coming. For now, drop your email and a one-liner about your event in the message field below — we'll add it to the queue.</p>
+      <form class="signup-form" data-page="submit">
+        <input type="email" name="email" placeholder="you@somewhere.com" required />
+        <button type="submit" class="btn btn-dark">Notify Shotgun</button>
+      </form>
+      <div class="form-status" aria-live="polite"></div>
+      <a href="#/" class="back-home" data-route="/">← Back to the homepage</a>
+    </div>
+  </div>
+
+  <div id="page-ai-tools" class="page">
+    <div class="page-inner">
+      <span class="eyebrow">AI Tools</span>
+      <h1>Smart tools for the people who run the towns.</h1>
+      <p class="copy">Free AI helpers for Chambers, tourism boards, and small businesses — write event listings, build a town page, get your Google profile in shape. The kind of tools that usually cost a consulting fee.</p>
+      <p class="signoff">We're building them now. Get on the list and you'll be first in line when the doors open.</p>
+      <form class="signup-form" data-page="ai-tools">
+        <input type="email" name="email" placeholder="you@somewhere.com" required />
+        <button type="submit" class="btn btn-dark">Notify Shotgun</button>
+      </form>
+      <div class="form-status" aria-live="polite"></div>
+      <a href="#/" class="back-home" data-route="/">← Back to the homepage</a>
+    </div>
+  </div>
+
+  <div id="page-about" class="page">
+    <div class="page-inner">
+      <span class="eyebrow">About</span>
+      <h1>Built by one guy. For the towns nobody else is mapping.</h1>
+      <p class="copy">Road Trip Atlas was conceived and built by Michael Chaves out of New Hampshire. The whole project runs on coffee, gas money, and a stubborn belief that the best weekends in America happen in towns the algorithm forgot.</p>
+      <p class="signoff">Free for towns, regional Chambers, tourism boards, and travelers to use, share, and contribute to. Currently mapping Maine, New Hampshire, and Vermont — more states coming.</p>
+      <p class="signoff" style="margin-top:1rem;">Questions, partnerships, or you just wanna say hi? Email <strong>shotgun@roadtripatlas.com</strong>. Shotgun handles all the messages — safety first. <em>You hear that, kids? Never bother the driver.</em> 😊</p>
+      <p class="signoff" style="margin-top:0.5rem; font-family:'Fraunces',serif; font-style:italic; color:#1C5239;">— Dad approved.</p>
+      <a href="#/" class="back-home" data-route="/">← Back to the homepage</a>
+    </div>
+  </div>
+
+  <div id="page-privacy" class="page">
+    <div class="page-inner">
+      <span class="eyebrow">Privacy</span>
+      <h1>Short version: we don't sell your stuff.</h1>
+      <p class="copy">If you give us your email, we use it to tell you when the atlas is ready. That's it. No selling, no sharing, no algorithm soup. The full privacy policy is being written by a human (not a robot pretending to be one) and will live here soon.</p>
+      <a href="#/" class="back-home" data-route="/">← Back to the homepage</a>
+    </div>
+  </div>
+
+  <div id="page-terms" class="page">
+    <div class="page-inner">
+      <span class="eyebrow">Terms</span>
+      <h1>Drive safe. Be cool to towns. Don't be a jerk.</h1>
+      <p class="copy">The full terms of service are coming. The spirit of them is: this is free, it's for everybody, and if you abuse it we'll politely point you toward the door.</p>
+      <a href="#/" class="back-home" data-route="/">← Back to the homepage</a>
+    </div>
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>Road Trip Atlas</h3>
+        <p>Every weekend, planned. Get off the highway and find the towns nobody told you about. Conceived and built by Michael Chaves. Free for towns, Chambers, tourism boards, and travelers.</p>
+      </div>
+      <div class="footer-col">
+        <h4>The Atlas</h4>
+        <a href="#/calendar" data-route="/calendar">Calendar</a>
+        <a href="#/towns" data-route="/towns">Towns</a>
+        <a href="#/plan" data-route="/plan">Plan a Trip</a>
+        <a href="#/submit" data-route="/submit">Submit Event</a>
+      </div>
+      <div class="footer-col">
+        <h4>The Operation</h4>
+        <a href="#/about" data-route="/about">About</a>
+        <a href="#/ai-tools" data-route="/ai-tools">AI Tools</a>
+        <a href="#/privacy" data-route="/privacy">Privacy</a>
+        <a href="#/terms" data-route="/terms">Terms</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Road Trip Atlas. All rights reserved.</span>
+      <span>Talk to <a href="mailto:shotgun@roadtripatlas.com" style="color:#E8C7A0;">shotgun@roadtripatlas.com</a> · Don't bother the driver. <em>Dad approved.</em></span>
+    </div>
+  </footer>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    /* ===========================
+       Tiny client-side router
+       =========================== */
+    const routes = {
+      '/':         { id: null,             title: 'Road Trip Atlas — Small-town weekends, planned' },
+      '/calendar': { id: 'page-calendar',   title: 'Calendar — Road Trip Atlas' },
+      '/towns':    { id: 'page-towns',      title: 'Towns — Road Trip Atlas' },
+      '/plan':     { id: 'page-plan',       title: 'Plan a Trip — Road Trip Atlas' },
+      '/submit':   { id: 'page-submit',     title: 'Submit an Event — Road Trip Atlas' },
+      '/ai-tools': { id: 'page-ai-tools',   title: 'AI Tools — Road Trip Atlas' },
+      '/about':    { id: 'page-about',      title: 'About — Road Trip Atlas' },
+      '/privacy':  { id: 'page-privacy',    title: 'Privacy — Road Trip Atlas' },
+      '/terms':    { id: 'page-terms',      title: 'Terms — Road Trip Atlas' }
+    };
+
+    function getRoute() {
+      const hash = window.location.hash.replace(/^#/, '') || '/';
+      return routes[hash] ? hash : '/';
+    }
+
+    function navigate(path) {
+      if (!routes[path]) path = '/';
+      if (window.location.hash !== '#' + path) {
+        window.location.hash = path;
+      } else {
+        render();
+      }
+    }
+
+    function render() {
+      const path = getRoute();
+      const cfg = routes[path];
+
+      // Hide all pages
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+
+      const home = document.getElementById('home');
+      if (path === '/') {
+        document.body.classList.remove('subpage');
+        home.style.display = '';
+      } else {
+        document.body.classList.add('subpage');
+        home.style.display = 'none';
+        const target = document.getElementById(cfg.id);
+        if (target) target.classList.add('active');
+      }
+
+      document.title = cfg.title;
+      window.scrollTo({ top: 0, behavior: 'instant' });
+
+      // Close mobile nav after navigation
+      document.getElementById('navLinks').classList.remove('open');
+    }
+
+    // Intercept all data-route clicks
+    document.addEventListener('click', (e) => {
+      const el = e.target.closest('[data-route]');
+      if (!el) return;
+      e.preventDefault();
+      navigate(el.getAttribute('data-route'));
+    });
+
+    window.addEventListener('hashchange', render);
+    window.addEventListener('DOMContentLoaded', render);
+
+    /* ===========================
+       Mobile nav toggle
+       =========================== */
+    document.getElementById('navToggle').addEventListener('click', () => {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+
+    /* ===========================
+       Toast
+       =========================== */
+    let toastTimer;
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.classList.remove('show'), 3800);
+    }
+
+    /* ===========================
+       Email capture forms
+       Wired to mailto: shotgun@roadtripatlas.com
+       (Easy to swap for Formspree / API later — see TODO below)
+       =========================== */
+    const SHOTGUN_EMAIL = 'shotgun@roadtripatlas.com';
+
+    function handleSignup(form) {
+      const status = form.parentElement.querySelector('.form-status');
+      const data = new FormData(form);
+      const email = (data.get('email') || '').toString().trim();
+      const start = (data.get('start') || '').toString().trim();
+      const end   = (data.get('end')   || '').toString().trim();
+      const page  = form.getAttribute('data-page') || 'unknown';
+
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        status.classList.add('error');
+        status.textContent = "That email looks off. Try again?";
+        return;
+      }
+      status.classList.remove('error');
+
+      // Stash in-session so nothing is lost even if mail client doesn't open
+      window.__rta_signups = window.__rta_signups || [];
+      window.__rta_signups.push({ email, start, end, page, ts: new Date().toISOString() });
+
+      // Build a mailto so the user's email client can fire off a note to Shotgun.
+      // TODO (Michael): when you've got a real backend or Formspree endpoint,
+      // replace this block with a fetch() POST to your endpoint.
+      const subject = encodeURIComponent(`[RTA Signup] ${page}`);
+      let body = `New signup from the ${page} page.\n\nEmail: ${email}\n`;
+      if (start || end) body += `Start: ${start}\nEnd: ${end}\n`;
+      body += `\nSent: ${new Date().toLocaleString()}`;
+      const mailto = `mailto:${SHOTGUN_EMAIL}?subject=${subject}&body=${encodeURIComponent(body)}`;
+
+      // Fire mailto in a hidden way so we don't navigate away from the page
+      const a = document.createElement('a');
+      a.href = mailto;
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => a.remove(), 100);
+
+      // Reset + show confirmation
+      form.reset();
+      status.textContent = "You're on the list. Shotgun's got you. Drive safe.";
+      showToast("Saved. Shotgun will holler when it's ready.");
+    }
+
+    document.querySelectorAll('form.signup-form, form.planner-form').forEach(form => {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        handleSignup(form);
+      });
+    });
+  </script>
+</body>
+</html>

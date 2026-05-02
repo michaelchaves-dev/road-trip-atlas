@@ -1,31 +1,68 @@
 # 🗺️ Road Trip Atlas
 
-A road trip planning and discovery tool — map routes, surface points of interest, and turn the open road into a curated atlas.
+> For the towns the highways forgot.
 
-## Status
-🚧 Early development — scaffolding the foundation.
+A free trip planner and event calendar for small-town America — every weekend, every festival, every back road worth taking. Currently mapping **Maine, New Hampshire, and Vermont**, with more states on the way.
 
-## Vision
-Build a road trip companion that helps drivers:
-- Plan multi-stop routes with smart suggestions
-- Discover hidden gems, scenic detours, and local favorites along the way
-- Capture and revisit trips as a personal atlas
+🚗 Live site: [roadtripatlas.com](https://roadtripatlas.com)
 
-## Tech Stack (planned)
-- **Backend:** Python / FastAPI
-- **Frontend:** TBD (web-first)
-- **Data:** Mapping APIs + curated POI sources
-- **Hosting:** Cloud-deployed (Docker)
+---
+
+## What's in here
+
+This repo currently holds the **homepage + coming-soon pages** — a single-file static site (`index.html`) with:
+
+- Hero, featured events, and state cards (Maine / NH / VT)
+- Hash-based client-side router for sub-pages
+- Email capture forms wired to `mailto:shotgun@roadtripatlas.com`
+- Trip planner stub (start / end / email)
+- Privacy + Terms placeholders
+
+No build step. No framework. Just one HTML file, hosted on Hostinger.
+
+---
+
+## Pages
+
+| Route | Status |
+|---|---|
+| `/` | Homepage ✅ |
+| `/calendar` | Coming soon (email capture) |
+| `/towns` | Coming soon (email capture) |
+| `/plan` | Coming soon (planner stub) |
+| `/submit` | Coming soon (email capture) |
+| `/ai-tools` | Coming soon (email capture) |
+| `/about` | Live ✅ |
+| `/privacy` | Placeholder |
+| `/terms` | Placeholder |
+
+---
 
 ## Roadmap
-- [ ] Core route planning engine
-- [ ] POI discovery + filtering
-- [ ] Trip save/share
-- [ ] Mobile-friendly UI
-- [ ] AI-powered itinerary suggestions
+
+- [ ] Real backend for email capture (replace `mailto:` with API endpoint)
+- [ ] Calendar page — actual event data for ME / NH / VT
+- [ ] Towns directory — one page per town
+- [ ] Trip planner — turn-by-turn detours, festival stops, route saving
+- [ ] Submit-an-event flow with moderation queue
+- [ ] AI tools for Chambers, tourism boards, small businesses
+- [ ] State expansion beyond New England
+
+---
+
+## Brand voice
+
+Shotgun talks. Driver drives. Don't bother the driver.
+
+Dad approved. 💚
+
+---
 
 ## Author
-Built by [Michael Chaves](https://github.com/michaelchaves-dev)
+
+Conceived and built by **Michael Chaves** out of New Hampshire.
+Questions, partnerships, or just wanna say hi: **shotgun@roadtripatlas.com**
 
 ## License
-MIT
+
+MIT — free for towns, Chambers, tourism boards, and travelers to use, share, and contribute to.
